@@ -8,5 +8,12 @@ const asyncMap = async (array, callback, debounceTime = 1000) => {
     })
   );
 
-  return results;
+const executionTime = Date.now() - startTime;
+if (executionTime < debounceTime) {
+  await new Promise(resolve =>
+    setTimeout(resolve, debounceTime - executionTime)
+                    );
+}
+
+return results;
 };
