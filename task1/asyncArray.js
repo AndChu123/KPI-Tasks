@@ -37,3 +37,5 @@ const demo = async () => {
   console.timeEnd('debounceTest');
   console.log('result', processedData);
 };
+
+demo().catch(console.error);
