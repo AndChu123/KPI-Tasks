@@ -28,10 +28,10 @@ const demo = async () => {
   });
   console.log('result', multipliedNumbers);
 
-  console.log('\nTest with debounce')l
+  console.log('\nTest with debounce')
   console.time('debounceTest');
   const processedData = await asyncMap(numbers, async (num) => {
-    return 'Processed ${num}';
+    return 'Processed ${num}`;
   }, 2000);
 
   console.timeEnd('debounceTest');
