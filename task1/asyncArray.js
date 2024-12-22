@@ -3,7 +3,7 @@ const asyncMap = async (array, callback, debounceTime = 1000) => {
 
   const results = await Promise.all(
     array.map(async (item, index, array) => {
-      const result = await callback(item, indexm array);
+      const result = await callback(item, index, array);
       return result;
     })
   );
