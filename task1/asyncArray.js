@@ -17,3 +17,13 @@ if (executionTime < debounceTime) {
 
 return results;
 };
+
+const demo = async () => {
+  const numbers = [1,2,3,4,5];
+
+  console.log('Test 1');
+  const multipliedNumbers = await asyncMap(numbers, async (num) => {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    return num*2;
+  });
+  console.log('result', multipliedNumbers);
