@@ -46,7 +46,7 @@ if (executionTime < debounceTime) {
   const abortPromise = new Promise ((_, reject) => {
     if (signal){
       signal.addEventListener('abort' , () => {
-        rejetc(new Error('op cancelled durind debounce'));
+        reject(new Error('op cancelled durind debounce'));
       });
     }
 });
@@ -59,7 +59,7 @@ return results;
     throw new Error('op cancelled');
   }
   throw error;
-}
+};
 
 const demo = async () => {
   const numbers = [1,2,3,4,5];
