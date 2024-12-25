@@ -42,3 +42,10 @@ async reduce(fn, initial) {
   }
   return result;
 }
+
+const bigDataSource = {
+  data: Array.from({ length: 1000 }, (_, i) => i),
+  slice(start, end) {
+    return Promise.resolve(this.data.slice(start, end));
+  }
+};
