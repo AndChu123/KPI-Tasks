@@ -1,4 +1,4 @@
-const asyncMap = async (array, callback, debounceTime = 1000) => {
+const asyncMap = (array, callback, debounceTime = 1000) => {
   const startTime = Date.now();
 
   return Promise.all(
@@ -8,7 +8,7 @@ const asyncMap = async (array, callback, debounceTime = 1000) => {
 ).then((results) => {
 const executionTime = Date.now() - startTime;
 if (executionTime < debounceTime) {
-  await new Promise(resolve =>
+  return new Promise(resolve =>
     setTimeout(() => resolve(results), debounceTime - executionTime)
   );
 }
@@ -20,20 +20,20 @@ const demo = async () => {
   const numbers = [1,2,3,4,5];
 
   console.log('Test 1');
-  const multipliedNumbers = await asyncMap(numbers, async (num) => {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return num*2;
-  });
+  asyncMap(numbers, async (num) => {
+    return new Promise(resolve => setTimeout(resolve(num * 2), 100));;
+  }).then((multipliedNumbers) => {
   console.log('result', multipliedNumbers);
 
   console.log('\nTest with debounce')
   console.time('debounceTest');
-  const processedData = await asyncMap(numbers, async (num) => {
-    return 'Processed ${num}`;
+  return asyncMap(numbers, async (num) => {
+    return Promise.resolve(`Processed ${num}`);
   }, 2000);
-
+  }).then((processedData) => {
   console.timeEnd('debounceTest');
   console.log('result', processedData);
+  })
 };
 
 demo().catch(console.error);
