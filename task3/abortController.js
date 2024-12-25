@@ -40,7 +40,7 @@ try{
 
 const executionTime = Date.now() - startTime;
 if (executionTime < debounceTime) {
-  await new Promise(resolve =>
+  const timeoutPromise = new Promise(resolve =>
     setTimeout(resolve, debounceTime - executionTime)
    );
   const abortPromise = new Promise ((_, reject) => {
