@@ -50,4 +50,13 @@ Completed
 
 Tests: 
 
-no tests ;) (exec problems)
+Test 1 default execution
+result [ 2, 4, 6, 8, 10 ]
+
+Test 2 cancel during execution
+error op cancelled
+
+Test 3 cancel during debounce
+result [ 2, 4, 6, 8, 10 ]
+
+If debounceTime set to 1500 the result will be 'error op cancelled'
