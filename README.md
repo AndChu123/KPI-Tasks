@@ -43,3 +43,11 @@ Result: [
   'Sequential 4',
   'Sequential 5'
 ]
+
+Task 3 
+
+Completed
+
+Tests: 
+
+no tests ;) (exec problems)
