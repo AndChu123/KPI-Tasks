@@ -52,7 +52,7 @@ if (executionTime < debounceTime) {
 });
 
   await Promise.race([timeoutPromise, abortPromise]);
-
+}
 return results;
 } catch (error) {
   if (error.message.includes('cancelled')) {
@@ -60,12 +60,12 @@ return results;
   }
   throw error;
 };
-
+}
 const demo = async () => {
   const numbers = [1,2,3,4,5];
 
   console.log('Test 1 default execution');
-  const controller1 = new abortConroller();
+  const controller1 = new AbortController();
   try{
   const result1 = await asyncMap(numbers, async (num) => {
     await new Promise(resolve => setTimeout(resolve, 100));
@@ -78,11 +78,11 @@ const demo = async () => {
 );
   console.log('result', result1);
   } catch (error) {
-    console.log('error', error.message
+    console.log('error', error.message);
   }
 
   console.log('\nTest 2 cancel during execution')
-  const controller2 = new abortController();
+  const controller2 = new AbortController();
   setTimeout(() => controller2.abort(), 150);
   try{
   const result2 = await asyncMap(numbers, async (num) => {
@@ -101,7 +101,7 @@ const demo = async () => {
   }
 
     console.log('\nTest 3 cancel during debounce');
-  const controller3 = new abortController();
+  const controller3 = new AbortController();
   setTimeout(() => controller3.abort(), 1100);
   try{
   const result3 = await asyncMap(numbers, async (num) => {
@@ -110,7 +110,7 @@ const demo = async () => {
     },
     { 
       debounceTime: 1000,
-      concurrency: infinity,
+      concurrency: Infinity,
       signal: controller3.signal
     }
   );
