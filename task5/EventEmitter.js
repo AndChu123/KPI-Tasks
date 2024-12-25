@@ -37,4 +37,8 @@ class Entity {
       timestamp: Date.now(),
     });
   }
+
+  onMessage(topic, callback){
+    return(this.EventEmitter.subscribe(topic, callback);
+  }
 }
