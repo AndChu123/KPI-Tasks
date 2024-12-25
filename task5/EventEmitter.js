@@ -81,6 +81,14 @@ setTimeout(() => {
 // service2 received: Hello from service1
 // service2 sending Hi
 // service1 received: Hi from service2
+
+
+// new result(onMessage update)
+// service1 sending Hello
+// service2 received: Hello from service1
+// service2 sending Hi
+// service1 received: Hi from service2
+// shutdown
 // service2 received: Hi from service2
 // shutdown
 
