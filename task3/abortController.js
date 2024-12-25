@@ -82,7 +82,7 @@ const demo = async () => {
   }
 
   console.log('\nTest 2 cancel during execution')
-  const conroller2 = new abortController();
+  const controller2 = new abortController();
   setTimeout(() => controller2.abort(), 150);
   try{
   const result2 = await asyncMap(numbers, async (num) => {
