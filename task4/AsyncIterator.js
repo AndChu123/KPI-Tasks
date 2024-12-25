@@ -1,9 +1,8 @@
 class DataStream {
   constructor(source, batchSize = 1000) {
     this.source = source;
-    this.batchsize = batchSize;
+    this.batchSize = batchSize;
   }
-}
 
 async *[Symbol.asyncIterator]() {
   let offset = 0;
@@ -22,14 +21,14 @@ map(fn) {
       const batch = await self.source.slice(start, end);
       return batch.map(fn);
     }
-  }, this batchSize);
+  }, this.batchSize);
 }
 
 filter(predicate) {
   const self = this;
   return new DataStream({
     async slice(start, end) {
-      const batch = await self.source,slice(start, end);
+      const batch = await self.source.slice(start, end);
       return batch.filter(predicate);
     }
   }, this.batchSize);
@@ -41,6 +40,7 @@ async reduce(fn, initial) {
     result = fn(result, item);
   }
   return result;
+}
 }
 
 const bigDataSource = {
