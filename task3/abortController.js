@@ -6,6 +6,13 @@ const results = new Array(array.length);
   let currentIndex = 0;
   let aborted = false;
 
+  const checkAborted = () => {
+    if (signal?.aborted) {
+      aborted = true;
+      throw new Error('op cancelled');
+    }
+  }
+
   const processItem = async () => {
     while (currentIndex < array.length) {
       const index = currentIndex++;
