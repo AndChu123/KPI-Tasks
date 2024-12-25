@@ -22,3 +22,10 @@ class EventEmitter {
     });
   }
 }
+
+class Entity {
+  constructor(name, EventEmitter) {
+    this.name = name;
+    this.EventEmitter = EventEmitter;
+  }
+}
