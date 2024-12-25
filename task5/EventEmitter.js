@@ -39,7 +39,11 @@ class Entity {
   }
 
   onMessage(topic, callback){
-    return (this.EventEmitter.subscribe(topic, callback));
+    return this.EventEmitter.subscribe(topic, (data) => {
+      if (data.from !== this.name) {
+        callback(data);
+      }
+    });
   }
 }
 
