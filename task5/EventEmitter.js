@@ -15,4 +15,10 @@ class EventEmitter {
   unsubscribe(topic, callback) {
     this.subscribers.get(topic)?.delete(callback);
   }
+
+  publish(topic, data) {
+    this.subscribers.get(topic)?.forEach(callback => {
+      setTimeout(() => callback(data), 0);
+    });
+  }
 }
