@@ -100,21 +100,24 @@ const demo = async () => {
     console.log('error', error.message);
   }
 
-    console.log('\nTest 3: Sequential execution');
-  console.time('sequential');
-  const sequentialData = await asyncMap(
-    numbers,
-    async (num) => {
+    console.log('\nTest 3 cancel during debounce');
+  const controller3 = new abortController();
+  setTimeout(() => controller3.abort(), 1100);
+  try{
+  const result3 = await asyncMap(numbers, async (num) => {
       await new Promise(resolve => setTimeout(resolve, 100));
-      return `Sequential ${num}`;
+      return num * 2;
     },
     { 
       debounceTime: 1000,
-      concurrency: 1 
+      concurrency: infinity,
+      signal: controller3.signal
     }
   );
-  console.timeEnd('sequential');
-  console.log('result:', sequentialData);
+    console.log('result', result3);
+  } catch (error) {
+    console.log('error', error.message);
+  }
 };
 
 demo().catch(console.error);
