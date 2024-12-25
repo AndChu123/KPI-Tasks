@@ -29,6 +29,9 @@ const results = new Array(array.length);
   }
 };
 
+try{
+  checkAborted();
+  
   const workers = Array(Math.min(concurrency, array.length))
   .fill()
   .map(() => processItem());
@@ -39,11 +42,24 @@ const executionTime = Date.now() - startTime;
 if (executionTime < debounceTime) {
   await new Promise(resolve =>
     setTimeout(resolve, debounceTime - executionTime)
-                    );
-}
+   );
+  const abortPromise = new Promise ((_, reject) => {
+    if (signal){
+      signal.addEventListener('abort' , () => {
+        rejetc(new Error('op cancelled durind debounce'));
+      });
+    }
+});
+
+  await Promise.race([timeoutPromise, abortPromise]);
 
 return results;
-};
+} catch (error) {
+  if (error.message.includes('cancelled')) {
+    throw new Error('op cancelled');
+  }
+  throw error;
+}
 
 const demo = async () => {
   const numbers = [1,2,3,4,5];
