@@ -14,11 +14,20 @@ const results = new Array(array.length);
   }
 
   const processItem = async () => {
-    while (currentIndex < array.length) {
+    while (currentIndex < array.length && !aborted) {
+      checkAborted();
       const index = currentIndex++;
+      try{
       results[index] = await callback(array[index], index, array);
+    } catch (error) {
+        if (error.name === 'AbortError' || signal?.aborted){
+          aborted = true;
+          throw new Error('op cancelled');
+        }
+        throw error;
     }
-  };
+  }
+};
 
   const workers = Array(Math.min(concurrency, array.length))
   .fill()
