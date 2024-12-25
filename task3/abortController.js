@@ -1,9 +1,10 @@
 
-const asyncMap = async (array, callback, { debounceTime = 1000, concurrency = Infinity } = {}) => {
+const asyncMap = async (array, callback, { debounceTime = 1000, concurrency = Infinity, signal = null } = {}) => {
   const startTime = Date.now();
 
 const results = new Array(array.length);
   let currentIndex = 0;
+  let aborted = false;
 
   const processItem = async () => {
     while (currentIndex < array.length) {
