@@ -28,4 +28,13 @@ class Entity {
     this.name = name;
     this.EventEmitter = EventEmitter;
   }
+
+  send(topic, message) {
+    console.log(`${this.name} sending ${message}`);
+    this.EventEmitter.publish(topic, {
+      from: this.name,
+      content: message,
+      timestamp: Date.now(),
+    });
+  }
 }
