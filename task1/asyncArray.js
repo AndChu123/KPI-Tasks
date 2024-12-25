@@ -1,21 +1,19 @@
 const asyncMap = async (array, callback, debounceTime = 1000) => {
   const startTime = Date.now();
 
-  const results = await Promise.all(
-    array.map(async (item, index, array) => {
-      const result = await callback(item, index, array);
-      return result;
-    })
-  );
-
+  return Promise.all(
+    array.map((item, index, array) => 
+      callback(item, index, array)
+  )
+).then((results) => {
 const executionTime = Date.now() - startTime;
 if (executionTime < debounceTime) {
   await new Promise(resolve =>
-    setTimeout(resolve, debounceTime - executionTime)
-                    );
+    setTimeout(() => resolve(results), debounceTime - executionTime)
+  );
 }
-
 return results;
+});
 };
 
 const demo = async () => {
