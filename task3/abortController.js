@@ -81,19 +81,24 @@ const demo = async () => {
     console.log('error', error.message
   }
 
-  console.log('\nTest 2 limited parallelism')
-  console.time('limitedParallelism');
-  const processedData = await asyncMap(numbers, async (num) => {
-    return `Processed ${num}`;
+  console.log('\nTest 2 cancel during execution')
+  const conroller2 = new abortController();
+  setTimeout(() => controller2.abort(), 150);
+  try{
+  const result2 = await asyncMap(numbers, async (num) => {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    return num * 2;
   }, 
 {
  debounceTime: 2000,
- concurrency: 2
+ concurrency: 2,
+  signal: controller2.signal
 }
     );
-
-  console.timeEnd('limitedParallelism');
-  console.log('result', processedData);
+    console.log('result', result2);
+  } catch (error) {
+    console.log('error', error.message);
+  }
 
     console.log('\nTest 3: Sequential execution');
   console.time('sequential');
