@@ -14,3 +14,13 @@ async *[Symbol.asyncIterator]() {
     offset += this.batchSize;
   }
 }
+
+map(fn) {
+  const self = this;
+  return new DataStream({
+    async slice(start, end) {
+      const batch = await self.source.slice(start, end);
+      return batch.map(fn);
+    }
+  }, this batchSize);
+}
