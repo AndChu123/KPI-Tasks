@@ -24,3 +24,13 @@ map(fn) {
     }
   }, this batchSize);
 }
+
+filter(predicate) {
+  const self = this;
+  return new DataStream({
+    async slice(start, end) {
+      const batch = await self.source,slice(start, end);
+      return batch.filter(predicate);
+    }
+  }, this.batchSize);
+}
