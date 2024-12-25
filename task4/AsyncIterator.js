@@ -34,3 +34,11 @@ filter(predicate) {
     }
   }, this.batchSize);
 }
+
+async reduce(fn, initial) {
+  let result = initial;
+  for await(const item of this) {
+    result = fn(result, item);
+  }
+  return result;
+}
