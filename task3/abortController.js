@@ -64,14 +64,22 @@ return results;
 const demo = async () => {
   const numbers = [1,2,3,4,5];
 
-  console.log('Test 1 full parallelism');
-  const multipliedNumbers = await asyncMap(numbers, async (num) => {
+  console.log('Test 1 default execution');
+  const controller1 = new abortConroller();
+  try{
+  const result1 = await asyncMap(numbers, async (num) => {
     await new Promise(resolve => setTimeout(resolve, 100));
     return num*2;
   },
-  { debounceTime: 1000 }
+  { debounceTime: 1000,
+  concurrency: 2,
+  signal: controller1.signal
+  }
 );
-  console.log('result', multipliedNumbers);
+  console.log('result', result1);
+  } catch (error) {
+    console.log('error', error.message
+  }
 
   console.log('\nTest 2 limited parallelism')
   console.time('limitedParallelism');
