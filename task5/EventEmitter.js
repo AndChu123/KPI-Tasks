@@ -39,7 +39,7 @@ class Entity {
   }
 
   onMessage(topic, callback){
-    return (this.EventEmitter.subscribe(topic, callback);
+    return (this.EventEmitter.subscribe(topic, callback));
   }
 }
 
@@ -60,3 +60,12 @@ entity2.send("updates", "Hi");
 setTimeout(() => {
   console.log("shutdown"); 
 }, 1000);
+
+// Result: 
+// service1 sending Hello
+// service2 sending Hi
+// service1 received: Hello from service1
+// service2 received: Hello from service1
+// service1 received: Hi from service2
+// service2 received: Hi from service2
+// shutdown 
