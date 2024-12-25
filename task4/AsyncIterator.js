@@ -49,3 +49,21 @@ const bigDataSource = {
     return Promise.resolve(this.data.slice(start, end));
   }
 };
+
+async function demo() {
+  const stream = new DataStream(bigDataSource, 100);
+
+  console.log('stream processing')
+  let count = 0
+
+  for await(const item of stream
+           .filter(x => x % 2 === 0)
+           .map(x => x*2)) {
+    if (count < 5) console.log('element', item);
+    count++;
+           }
+
+  console.log('total processed elements', count);
+}
+
+
