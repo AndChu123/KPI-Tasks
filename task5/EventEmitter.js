@@ -39,6 +39,24 @@ class Entity {
   }
 
   onMessage(topic, callback){
-    return(this.EventEmitter.subscribe(topic, callback);
+    return (this.EventEmitter.subscribe(topic, callback);
   }
 }
+
+const channel = new EventEmitter();
+const entity1 = new Entity("service1", channel);
+const entity2 = new Entity("service2", channel);
+
+entity1.onMessage("updates", msg => 
+                 console.log (`${entity1.name} received: ${msg.content} from ${msg.from}`)
+                 );
+entity2.onMessage("updates", msg => 
+                 console.log (`${entity2.name} received: ${msg.content} from ${msg.from}`)
+                 );
+
+entity1.send("updates", "Hello");
+entity2.send("updates", "Hi");
+
+setTimeout(() => {
+  console.log("shutdown"); 
+}, 1000);
