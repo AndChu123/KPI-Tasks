@@ -60,3 +60,18 @@ Test 3 cancel during debounce
 result [ 2, 4, 6, 8, 10 ]
 
 If debounceTime set to 1500 the result will be 'error op cancelled'
+
+
+Task 4
+
+Completed
+
+Test:
+
+stream processing
+element 0
+element 4
+element 8
+element 12
+element 16
+total processed elements 500
