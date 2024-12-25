@@ -11,4 +11,8 @@ class EventEmitter {
 
     return() => this.unsubscribe(topic, callback);
   }
+
+  unsubscribe(topic, callback) {
+    this.subscribers.get(topic)?.delete(callback);
+  }
 }
