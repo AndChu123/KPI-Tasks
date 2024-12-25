@@ -1,12 +1,21 @@
-const asyncMap = async (array, callback, debounceTime = 1000) => {
+const asyncMap = async (array, callback, { debounceTime = 1000, concurrency = Infinity } = {}) => {
   const startTime = Date.now();
 
-  const results = await Promise.all(
-    array.map(async (item, index, array) => {
-      const result = await callback(item, index, array);
-      return result;
-    })
-  );
+const results = new Array(array.lenght);
+  let currentIndex = 0;
+
+  const processItem = async () => {
+    while (currentIndex < array.lenght) {
+      const index = currentIndex++;
+      results[index] = await callback(array[index], index, array);
+    }
+  };
+
+  const workers = Array(Math.min(concurrency, array.lenght))
+  .fill()
+  .map(() => processItem());
+
+  await Promise.all(workers);
 
 const executionTime = Date.now() - startTime;
 if (executionTime < debounceTime) {
