@@ -54,8 +54,8 @@ entity2.onMessage("updates", msg =>
                  console.log (`${entity2.name} received: ${msg.content} from ${msg.from}`)
                  );
 
-entity1.send("updates", "Hello");
-entity2.send("updates", "Hi");
+setTimeout(() => entity1.send("updates", "Hello"), 100);
+setTimeout(() => entity2.send("updates", "Hi"), 250);
 
 setTimeout(() => {
   console.log("shutdown"); 
@@ -69,3 +69,14 @@ setTimeout(() => {
 // service1 received: Hi from service2
 // service2 received: Hi from service2
 // shutdown 
+
+
+// new result(demo update)
+// service1 sending Hello
+// service1 received: Hello from service1
+// service2 received: Hello from service1
+// service2 sending Hi
+// service1 received: Hi from service2
+// service2 received: Hi from service2
+// shutdown
+
