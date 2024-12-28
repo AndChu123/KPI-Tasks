@@ -6,14 +6,19 @@ Tests:
 
 Test 1
 
-result [2, 4, 6, 8, 10]
+error null
+result [ 2, 4, 6 ]
 
-Test with debounce
+Test 2 error
 
-debounceTest: ~2000ms
+error Error: failed on number 2
+result undefined
 
-result ['Processed 1', 'Processed 2', 'Processed 3', 'Processed 4', 'Processed 5']
+Test 3 with debounce
 
+debounceTest: 2.008s
+error null
+result [ 'Processed 1', 'Processed 2', 'Processed 3' ]
 
 Task 2
 
