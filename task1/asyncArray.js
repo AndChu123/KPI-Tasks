@@ -2,7 +2,7 @@ const asyncMap = (array, iteratee, callback, debounceTime = 1000) => {
   const startTime = Date.now();
   let completed = 0;
   const results = new Array(array.length);
-  let hasError = fallse;
+  let hasError = false;
 
   array.forEach((item, index) => {
     iteratee(item, (error, result) => {
@@ -30,3 +30,53 @@ const asyncMap = (array, iteratee, callback, debounceTime = 1000) => {
     });
   });
 };
+
+
+console.log('test 1');
+asyncMap(
+  [1,2,3],
+  (data, cb) => {
+    setTimeout(() => {
+      cb(null, data * 2);
+    }, 1000);
+  },
+  (err, result) => {
+    console.log('error', err);
+    console.log('result', result);
+  }
+);
+
+console.log('\ntest 2 error');
+asyncMap(
+  [1,2,3],
+  (data, cb) => {
+    setTimeout(() => {
+      if (data === 2) {
+        cb(new Error('failed on number 2'));
+      } else{
+      cb(null, data * 2);
+      }
+    }, 1000);
+  },
+  (err, result) => {
+    console.log('error', err);
+    console.log('result', result);
+  }
+);
+
+console.log('\ntest 3 with debounce');
+console.time('debounceTest');
+asyncMap(
+  [1,2,3],
+  (data, cb) => {
+    setTimeout(() => {
+      cb(null, `Processed ${data}`);
+    }, 10);
+  },
+  (err, result) => {
+    console.timeEnd('debounceTest');
+    console.log('error', err);
+    console.log('result', result);
+  },
+  2000
+);
